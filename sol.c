@@ -1,4 +1,4 @@
-#define _DEFAULT_SOURCE /* for getopt, sigaction, usleep */
+#define _POSIX_C_SOURCE 199309L
 #include <poll.h>
 #include <signal.h>
 #include <stdio.h>
@@ -1180,7 +1180,8 @@ void print_table(const struct cursor* active, const struct cursor* inactive) {
 
 void visbell (void) {
 	printf ("\033[?5h"); fflush (stdout);
-	usleep (100000);
+	struct timespec ts = {0, 100000000};
+	nanosleep (&ts, NULL);
 	printf ("\033[?5l"); fflush (stdout);
 }
 void win_anim(void) {
